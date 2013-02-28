@@ -34,6 +34,17 @@ We can check the current counter number like so:
 
     counter.i
 
+It also keeps track of the high water mark, that is, the highest value the counter ever reached:
+
+    var counter = refcount(20)
+    counter.pop(15)
+
+    counter.i
+    // => 5
+
+    counter.highwater
+    // => 20
+
 We can also listen for push and pop events using the standard EventEmitter interface:
 
     counter.on('push', function () {
@@ -50,16 +61,7 @@ For memory purposes, consider using `.once`:
       console.log('done')
     })
 
-It also keeps track of the high water mark, that is, the highest value the counter ever reached:
 
-    var counter = refcount(20)
-    counter.pop(15)
-
-    counter.i
-    // => 5
-
-    counter.highwater
-    // => 20
 
 ## api
 
@@ -67,10 +69,16 @@ It also keeps track of the high water mark, that is, the highest value the count
 Initializes a new `refcount`er. If an `initial` count is not specified, it defaults to 0.
 
 ### refcount#push(), refcount#push(delta : Number)
-Increments the count by 1 or `delta`.
+Increments the count by 1 or `delta`. Returns the current counter value.
 
 ### refcount#pop(), refcount#pop(delta : Number)
-Decrements the count by 1 or `delta`, to a minimum of 0.
+Decrements the count by 1 or `delta`, to a minimum of 0. Returns the current counter value.
+
+### refcount#i : Number
+The current counter value
+
+### refcount#highwater : Number
+The highest counter value
 
 ## events
 
