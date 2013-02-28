@@ -6,6 +6,7 @@ function refcount(init) {
     return new refcount(init)
   }
   this.i = init || 0;
+  this.highwater = this.i
 }
 
 util.inherits(refcount, EventEmitter)
@@ -13,6 +14,8 @@ util.inherits(refcount, EventEmitter)
 refcount.prototype.push = function (x) {
   if(x === void 0) { x = 1 }
   this.i += x
+
+  this.highwater = Math.max(this.i, this.highwater)
 
   this.emit('push', x, this.i)
 

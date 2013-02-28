@@ -50,6 +50,17 @@ For memory purposes, consider using `.once`:
       console.log('done')
     })
 
+It also keeps track of the high water mark, that is, the highest value the counter ever reached:
+
+    var counter = refcount(20)
+    counter.pop(15)
+
+    counter.i
+    // => 5
+
+    counter.highwater
+    // => 20
+
 ## api
 
 ### refcount(), refcount(initial : Number)

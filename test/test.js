@@ -90,4 +90,18 @@ describe('refcount', function () {
       x.i.should.equal(0)
     })
   })
+
+  describe('#highwater', function () {
+    it('describes the maximum value of the counter', function () {
+      var x = refcount(20)
+      x.push()
+      x.push()
+      x.i.should.equal(22)
+      x.pop()
+      x.pop()
+      x.pop()
+      x.i.should.equal(19)
+      x.highwater.should.equal(22)
+    })
+  })
 })
